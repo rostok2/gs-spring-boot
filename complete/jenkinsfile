@@ -8,16 +8,6 @@ pipeline {
 
 
     stages {
-        '''
-        //потрібно якщо не хочемо добавляти в репозиторій github
-        stage('Get Code from Git') {
-            steps {
-                    
-                    
-                git branch: 'main', url: 'https://github.com/rostok2/gs-spring-boot.git'
-            }
-        }
-        '''
         stage('Build Maven Project') {
             steps {
                 echo 'Start building...'
