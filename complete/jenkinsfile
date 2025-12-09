@@ -25,9 +25,13 @@ pipeline {
         success {
             echo 'Build Successful! Archiving artifacts...'
             archiveArtifacts artifacts: 'complete/target/*.jar', allowEmptyArchive: false
+
+            telegramSend message: "✅ Успіх! Проєкт ${env.JOB_NAME} зібрано.", chatId: '-5018070398'
         }
         failure {
             echo 'Build Failed :('
+
+            telegramSend message: "❌ Провал! Проєкт ${env.JOB_NAME} впав.", chatId: '-5018070398'
         }
     }
 }
