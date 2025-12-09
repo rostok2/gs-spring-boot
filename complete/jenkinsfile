@@ -25,13 +25,21 @@ pipeline {
         success {
             echo 'Build Successful! Archiving artifacts...'
             archiveArtifacts artifacts: 'complete/target/*.jar', allowEmptyArchive: false
-
-            telegramSend message: "✅ Успіх! Проєкт ${env.JOB_NAME} зібрано.", chatId: -5018070398
+            
+            sh """
+                curl -s -X POST https://api.telegram.org/bot8340221837:AAGsDXcHszORf5MEJb3XyRFLel6-TGweuZ0/sendMessage \
+                -d chat_id=-5018070398 \
+                -d text="✅ Успіх! Проєкт ${env.JOB_NAME} (Build #${env.BUILD_NUMBER}) зібрано."
+            """
         }
         failure {
             echo 'Build Failed :('
-
-            telegramSend message: "❌ Провал! Проєкт ${env.JOB_NAME} впав.", chatId: -5018070398
+            
+            sh """
+                curl -s -X POST https://api.telegram.org/bot8340221837:AAGsDXcHszORf5MEJb3XyRFLel6-TGweuZ0/sendMessage \
+                -d chat_id=-5018070398 \
+                -d text="❌ Провал! Проєкт ${env.JOB_NAME} впав."
+            """
         }
     }
 }
